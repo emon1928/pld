@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 			@ini_set('zlib.output_compression', 'Off');
 			// set the headers, prevent caching
 			header("Pragma: no-cache");
-			header("Expires: 0");
+			header("Expires: -1");
 			header("Cache-Control: no-cache, must-revalidate,no-store,post-check=0, pre-check=0");
 			header("Content-Length:". filesize($file));
 			header("Content-type:application/pdf");
@@ -51,12 +51,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 			//fpassthru($file);//works fine now
 		
 		}
+		else {
+			// file does not exist
+			header("HTTP/1.0 404 Not Found");
+			echo "file not found. please try again";
+			
+		}
 	}
 	else{
-		// file does not exist
-	    header("HTTP/1.0 404 Not Found");
-	    exit;
 		
+	   //input value is empty
 	}
 }
 else 
